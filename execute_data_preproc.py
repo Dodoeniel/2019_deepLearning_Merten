@@ -31,14 +31,19 @@ labels = dataPreproc.getTimeDistributedLabels(eec, X_ts)
 #Data = dataPreproc.truncate_differentiated(X_ts, labels, part, target_list)
 
 # data preproc with sliding window
-#w_size = 10 # [s]
-#hop = 1# [s]
-#Data = dataPreproc.windowData_all(X_ts, labels, w_size, hop, discard=False)
+w_size = 10 # [s]
+hop = 1# [s]
+### input DataSet as FlatDataFrame and time distributedLabels
+# discard = True --> data with windows being smaller than window are discarded
+# discard = False --> zero padding
+Data = dataPreproc.windowData_all(X_ts, labels, w_size, hop, discard=True)
 
 # data preproc with one window
-part = 'center'
-duration = 10
-Data = dataPreproc.truncate_all(X_ts, labels, duration, part, discard=False)
+#part = 'center'
+#duration = 10
+#Data = dataPreproc.truncate_all(X_ts, labels, duration, part, discard=False)
+
+
 
 pickle.dump(Data, open(config.savePath + projectName + '/' + projectName + '.p', "wb"))
 

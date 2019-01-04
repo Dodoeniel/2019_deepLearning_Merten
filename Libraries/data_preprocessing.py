@@ -517,6 +517,7 @@ def splitDataPandasFormat(X_ts, labels, split, COLUMN_ID = 'stopId'):
                 break
     return (X_ts, labels), (X_test, y_test)
 
+
 def getTimeDistributedLabels(eec_data, X_ts):
     """
     @author: Daniel

@@ -22,8 +22,8 @@ class Configuration:
 
 # Definition of different Configurations
 def getConfig_SMP1051(projectName):
-    config_SMP1051 = Configuration(eedPath = '/home/daniel/Documents/MasterArbeitProgrammieren/',
-                                   eecPath = '/home/daniel/Documents/MasterArbeitProgrammieren/1051_fr_eec.csv',
+    config_SMP1051 = Configuration(eedPath = '/media/computations/DATA/ExperimentalData/SMP_1051/',
+                                   eecPath = '/media/computations/DATA/ExperimentalData/SMP_1051/1051_fr_eec.csv',
                                    savePath = '/home/daniel/Documents/MasterArbeitProgrammieren/',
                                    datasetNumber = '1051',
                                    projectName = projectName)
