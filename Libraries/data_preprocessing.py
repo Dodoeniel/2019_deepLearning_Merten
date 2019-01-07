@@ -885,15 +885,14 @@ def getUpDownLabel_pandas(X_ts, labels_td, upTime = 0.1, downTime=0.1, doUp=True
     labels_without = labels_td
     X_with = X_ts
     labels_with = labels_td
-    labels_single = reduceLabel(labels_td)
     for id in labels_td[COLUMN_ID].unique():
         squeal = bool(labels_td[labels_td[COLUMN_ID] == id].max()[0])
         if squeal:
-            X_without = X_without[X_without != id]
-            labels_without = labels_without[labels_without != id]
+            X_without = X_without[X_without[COLUMN_ID] != id]
+            labels_without = labels_without[labels_without[COLUMN_ID] != id]
         elif not squeal:
-            X_with = X_with[X_with != id]
-            labels_with = labels_with[labels_with != id]
+            X_with = X_with[X_with[COLUMN_ID] != id]
+            labels_with = labels_with[labels_with[COLUMN_ID] != id]
 
     columnsPDLabel = labels_with.columns.values.tolist()
     labels_upDown_pandas = pd.DataFrame(columns=columnsPDLabel)
@@ -914,13 +913,16 @@ def getUpDownLabel_pandas(X_ts, labels_td, upTime = 0.1, downTime=0.1, doUp=True
                         if indexOne[i] + k <= currLabel.last_valid_index():
                             currLabel.at[indexOne[i] + k, 'label'] = 3
         labels_upDown_pandas = labels_upDown_pandas.append(currLabel)
-    return labels_upDown_pandas
+    return X_without, X_with, labels_without, labels_upDown_pandas
 
 
 def getUpDownLabels_np(labels_upDown_pandas, COLUMN_ID='stopId'):
+
+
+    #### one hot encoding: no-squeal y/n, squeal y/n, up y/n, down y/n
     label_np = np.zeros((len(labels_upDown_pandas[COLUMN_ID].unique()),
                          len(labels_upDown_pandas[labels_upDown_pandas[COLUMN_ID] ==
-                                                  labels_upDown_pandas[COLUMN_ID].unique()[0]]), 3))
+                                                  labels_upDown_pandas[COLUMN_ID].unique()[0]]), 4))
     for i in range(label_np.shape[0]):
         id = labels_upDown_pandas[COLUMN_ID].unique()[i]
         currLabel = labels_upDown_pandas[labels_upDown_pandas[COLUMN_ID] == id]['label'].values
@@ -929,11 +931,11 @@ def getUpDownLabels_np(labels_upDown_pandas, COLUMN_ID='stopId'):
         downYN_index = np.where(currLabel == 3)[0]
 
         for index in squealYN_index:
-            label_np[i][index][0] = 1
-        for index in upYN_index:
             label_np[i][index][1] = 1
-        for index in downYN_index:
+        for index in upYN_index:
             label_np[i][index][2] = 1
+        for index in downYN_index:
+            label_np[i][index][3] = 1
     return label_np
 
 

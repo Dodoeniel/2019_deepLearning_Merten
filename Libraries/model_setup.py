@@ -1462,6 +1462,16 @@ def m2L_rRegu(input_shape, reg):
     m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     return m
 
+def m2L_rRegu16(input_shape, reg):
+    m = Sequential()
+    m.add(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2, recurrent_regularizer=reg))
+    m.add(Dropout(0.2))
+    m.add(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2, recurrent_regularizer=reg))
+    m.add(Dropout(0.2))
+    m.add(TimeDistributed(Dense(1, activation='sigmoid')))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
 
 def m2L_allRegu(input_shape, rreg, breg, kreg):
     m = Sequential()
@@ -1486,6 +1496,15 @@ def m2l_rRegu_nTD(input_shape, rreg):
     m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     return m
 
+def m2l_16_UpDown(input_shape, rreg=None, breg=None, kreg=None):
+    m = Sequential()
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2, recurrent_regularizer=rreg, bias_regularizer=breg, kernel_regularizer=kreg))
+    m.add(Dropout(0.2))
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2, recurrent_regularizer=rreg, bias_regularizer=breg, kernel_regularizer=kreg))
+    m.add(Dropout(0.2))
+    m.add(TimeDistributed(Dense(4, activation='sigmoid')))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
 
 modelDict = {
     'singleLabel_1': singleLabel_1,
@@ -1589,10 +1608,14 @@ modelDict = {
     'Model_hour_td': Model_hour_td,
     'Model_bulb': Model_bulb,
     'Model_bulb_td': Model_bulb_td,
+    #### regularization models
     'm2l_bRegu' : m2L_bRegu,
     'm2l_kRegu' : m2L_kRegu,
     'm2l_rRegu' : m2L_rRegu,
     'm2l_allRegu' : m2L_allRegu,
-    'm2l_rRegu_nTD' : m2l_rRegu_nTD
+    'm2l_rRegu_nTD' : m2l_rRegu_nTD,
+    'm2L_rRegu16' : m2L_rRegu16,
+    #### UpDownLabel Models
+    'm2l_16_UpDown' : m2l_16_UpDown
 
 }
