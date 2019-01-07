@@ -1474,6 +1474,19 @@ def m2L_allRegu(input_shape, rreg, breg, kreg):
     return m
 
 
+def m2l_rRegu_nTD(input_shape, rreg):
+    m = Sequential()
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2, recurrent_regularizer=rreg))
+    m.add(Dropout(0.2))
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2, recurrent_regularizer=rreg))
+    m.add(Dropout(0.2))
+    m.add(TimeDistributed(Dense(1, activation='sigmoid')))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
 modelDict = {
     'singleLabel_1': singleLabel_1,
     'singleLabel_2': singleLabel_2,
@@ -1579,6 +1592,7 @@ modelDict = {
     'm2l_bRegu' : m2L_bRegu,
     'm2l_kRegu' : m2L_kRegu,
     'm2l_rRegu' : m2L_rRegu,
-    'm2l_allRegu' : m2L_allRegu
+    'm2l_allRegu' : m2L_allRegu,
+    'm2l_rRegu_nTD' : m2l_rRegu_nTD
 
 }

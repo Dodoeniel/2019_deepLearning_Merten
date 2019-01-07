@@ -55,3 +55,16 @@ def getNrOfBeginEnding(ClassifiedDataSet_label, nrBegin=1, nrEnd=1):
         return begin, end
     else:
         return begin, end
+
+FN_BeginEnd = getNrOfBeginEnding(FN[1])
+print('FN Begin with 1: ' + str(FN_BeginEnd[0]))
+print('FN End with 1: ' + str(FN_BeginEnd[1]))
+FP_BeginEnd = getNrOfBeginEnding(FP[1])
+print('FP Begin with 1: ' + str(FP_BeginEnd[0]))
+print('FP End with 1: ' + str(FP_BeginEnd[1]))
+TP_BeginEnd = getNrOfBeginEnding(TP[1])
+print('TP Begin with 1: ' + str(TP_BeginEnd[0]))
+print('TP End with 1: ' + str(TP_BeginEnd[1]))
+TN_BeginEnd = getNrOfBeginEnding(TN[1])
+print('TN Begin with 1: ' + str(TN_BeginEnd[0]))
+print('TN End with 1: ' + str(TN_BeginEnd[1]))
