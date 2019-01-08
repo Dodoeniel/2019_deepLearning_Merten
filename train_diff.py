@@ -22,7 +22,7 @@ Savepath = '/home/computations/ExperimentalData/ModelHistoryFiles'
 
 
 # regularizers to use
-regularizers = [L1L2(l1=0.0, l2=0.0), L1L2(l1=0.01, l2=0.0), L1L2(l1=0.0, l2=0.01), L1L2(l1=0.01, l2=0.01)]
+regularizers = [L1L2(l1=0.01, l2=0.01)]
 
 DataScaling = True
 StopPatience = 30
@@ -37,7 +37,7 @@ for i in range(len(regularizers)):
     file = open(path + filename, 'rb')
     Data = pickle.load(file)
 
-    dropChannels = ['time', 'stopId', 'trg1', 'n1', 'trot1', 'tlin1', 'tlin2', 'tamb1']
+    dropChannels = ['time', 'stopId']
     InputDataSet = pp.shape_Data_to_LSTM_format(Data[0][0], dropChannels)
     input_shape = (None, InputDataSet.shape[2])
     m = model_setup.modelDict[model](input_shape, rreg, breg, kreg)
@@ -45,7 +45,7 @@ for i in range(len(regularizers)):
     testData = list()
 
     batch_size = 10
-    epochs = 10
+    epochs = 400
     for currData in Data:
         X_ts, labels = pp.balanceSlicedData(currData[0], currData[1], target=50, distributed_Output=True, COLUMN_ID='stopId')
         TrainData, TestData = pp.splitDataPandasFormat(X_ts, labels, split=0.3)

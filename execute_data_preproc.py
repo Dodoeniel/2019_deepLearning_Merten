@@ -8,7 +8,7 @@ from Libraries import log_setup as logSetup
 
 
 
-projectName = 'Window10s_pad'
+projectName = 'last2s'
 callDataset = '1051'
 config = configuration.getConfig(projectName, callDataset)
 
@@ -31,19 +31,19 @@ labels = dataPreproc.getTimeDistributedLabels(eec, X_ts)
 #Data = dataPreproc.truncate_differentiated(X_ts, labels, part, target_list)
 
 # data preproc with sliding window
-w_size = 10 # [s]
-hop = 1# [s]
+#w_size = 10 # [s]
+#hop = 1# [s]
 ### input DataSet as FlatDataFrame and time distributedLabels
 # discard = True --> data with windows being smaller than window are discarded
 # discard = False --> zero padding
-Data = dataPreproc.windowData_all(X_ts, labels, w_size, hop, discard=True)
+#Data = dataPreproc.windowData_all(X_ts, labels, w_size, hop, discard=True)
 
 # data preproc with one window
-#part = 'center'
-#duration = 10
-#Data = dataPreproc.truncate_all(X_ts, labels, duration, part, discard=False)
+part = 'last'
+duration = 2
+Data = dataPreproc.truncate_all(X_ts, labels, duration, part, discard=True)
 
 
 
-pickle.dump(Data, open(config.savePath + projectName + '/' + projectName + '.p', "wb"))
+pickle.dump(Data, open(projectName + '.p', "wb"))
 

@@ -5,8 +5,8 @@ import matplotlib as mpl
 #mpl.use("pgf")
 mpl.use('TkAgg')
 
-Run = 118889
-Name = 'm6a_3'
+Run = 127964
+Name = 'Diff10Sec_kReg'
 PATH = '/media/computations/DATA/ExperimentalData/Runs/' + str(Run) + '/' + Name + '_history.p'
 
 import matplotlib.pyplot as plt

@@ -939,6 +939,50 @@ def getUpDownLabels_np(labels_upDown_pandas, COLUMN_ID='stopId'):
     return label_np
 
 
+def upSample(X_ts, labels_td, SamplingFactor, COLUMN_ID='stopId'):
+    X_interpolated = pd.DataFrame()
+    labels_interpolated = pd.DataFrame()
+    for stopId in X_ts[COLUMN_ID].unique():
+
+        X_curr = X_ts[X_ts[COLUMN_ID] == stopId]
+        initialLength = len(X_curr)
+        label_curr = labels_td.loc[labels_td[COLUMN_ID] == stopId]
+
+        columndsX = X_curr.columns.values.tolist()
+        columnsy = label_curr.columns.values.tolist()
+        nanXFrame = pd.DataFrame(np.nan, index=range(SamplingFactor-1), columns=columndsX)
+        nanyFrame = pd.DataFrame(np.nan, index=range(SamplingFactor-1), columns=columnsy)
+        X_curr_int = pd.DataFrame()
+        label_curr_int = pd.DataFrame()
+        for index in range(initialLength):
+            X_curr_int = X_curr_int.append(X_curr.iloc[index, :], ignore_index=True)
+            X_curr_int = X_curr_int.append(nanXFrame, ignore_index=True)
+            label_curr_int = label_curr_int.append(label_curr.iloc[index, :], ignore_index=True)
+            label_curr_int = label_curr_int.append(nanyFrame, ignore_index=True)
+
+
+
+        X_curr_int['dec1'] = X_curr_int['dec1'].interpolate(method='linear')
+        X_curr_int['tempg'] = X_curr_int['tempg'].interpolate(method='linear')
+        X_curr_int['frc1'] = X_curr_int['frc1'].interpolate(method='linear')
+        X_curr_int['n1'] = X_curr_int['n1'].interpolate(method='linear')
+
+        label_curr_int['label'] = label_curr_int['label'].interpolate(method='nearest')
+        label_curr_int['time'] = label_curr_int['time'].interpolate(method='linear')
+        if COLUMN_ID=='sliceId':
+            fillStopId = X_curr['stopId'].unique()[0]
+            label_curr_int['stopId'] = label_curr_int['stopId'].fillna(fillStopId)
+            X_curr_int['stopId'] = X_curr_int['stopId'].fillna(fillStopId)
+        X_curr_int[COLUMN_ID] = X_curr_int[COLUMN_ID].fillna(stopId)
+        label_curr_int[COLUMN_ID] = label_curr_int[COLUMN_ID].fillna(stopId)
+        X_curr_int = X_curr_int.interpolate(method='spline', order=2)
+
+        X_interpolated = pd.concat([X_interpolated, X_curr_int])
+        labels_interpolated = pd.concat([labels_interpolated, label_curr_int])
+
+    return X_interpolated, labels_interpolated
+
+
 # Log Functions
 def summarizeFeatureSelection(X_feat, X_feat_relevant):
 
