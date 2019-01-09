@@ -939,6 +939,25 @@ def getUpDownLabels_np(labels_upDown_pandas, COLUMN_ID='stopId'):
     return label_np
 
 
+def downSample(X_ts, labels_td, SamplingFactor, COLUMN_ID='stopId'):
+    X_downSampled = pd.DataFrame()
+    labels_downSampled = pd.DataFrame()
+    for stopId in X_ts[COLUMN_ID].unique():
+        X_curr = X_ts[X_ts[COLUMN_ID] == stopId]
+        label_curr = labels_td.loc[labels_td[COLUMN_ID] == stopId]
+        initialLength = len(X_curr)
+
+        X_curr_down = pd.DataFrame()
+        label_curr_down = pd.DataFrame()
+        for index in range(0, math.floor(initialLength/SamplingFactor, SamplingFactor)):
+            X_curr_down = X_curr_down.append(X_curr.iloc[index, :], ignore_index=True)
+            label_curr_down = label_curr_down.append(label_curr.iloc[index, :], ignore_index=True)
+
+        X_downSampled = pd.concat([X_downSampled, X_curr_down])
+        labels_downSampled = pd.concat([labels_downSampled, label_curr_down])
+
+    return X_downSampled, labels_downSampled
+
 def upSample(X_ts, labels_td, SamplingFactor, COLUMN_ID='stopId'):
     X_interpolated = pd.DataFrame()
     labels_interpolated = pd.DataFrame()

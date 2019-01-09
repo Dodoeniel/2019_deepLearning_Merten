@@ -8,7 +8,7 @@ from Libraries import log_setup as logSetup
 
 
 
-projectName = 'last2s'
+projectName = 'smallSingleWindow'
 callDataset = '1051'
 config = configuration.getConfig(projectName, callDataset)
 
@@ -39,7 +39,7 @@ labels = dataPreproc.getTimeDistributedLabels(eec, X_ts)
 #Data = dataPreproc.windowData_all(X_ts, labels, w_size, hop, discard=True)
 
 # data preproc with one window
-part = 'last'
+part = 'center'
 duration = 2
 Data = dataPreproc.truncate_all(X_ts, labels, duration, part, discard=True)
 

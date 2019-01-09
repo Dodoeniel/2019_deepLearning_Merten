@@ -20,19 +20,17 @@ path = '/media/computations/DATA/ExperimentalData/'
 config = configuration.getConfig(projectName, callDataset)
 
 # Setup Logger
-logSetup.configureLogfile(config.logPath, config.logName)
-logSetup.writeLogfileHeader(config)
-
-
-Data = pickle.load(open('SmallWindowData.p', 'rb'))
-X_ts = Data[0]
-labels_td = Data[1]
+#logSetup.configureLogfile(config.logPath, config.logName)
+##logSetup.writeLogfileHeader(config)
 
 Model_name = 'Diff10Sec_trainedmodel.h5'
 model = load_model(Model_name)
-COLUMN_ID = 'sliceId'
+
+dataSetName = 'SmallWindowData.p'
+Data = pickle.load(open(dataSetName, 'rb'))
+X_ts = Data[0]
+labels_td = Data[1]
 
 dropChannels = ['time', 'stopId', 'trg1', 'n1', 'trot1', 'tlin1', 'tlin2', 'tamb1']
 
-X, y = pp.balanceSlicedData(Data[0], Data[1], target=50, distributed_Output=True)
-
+COLUMN_ID = 'sliceId'

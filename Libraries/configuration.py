@@ -61,8 +61,8 @@ def getConfig_1131(projectName):
 def getConfig(projectName, callDataset):
     """for parallel execution on cluster only"""
     myDict ={
-        '1051': getConfig_SMP1051,
-        #'1051': getConfig_vereinfacht,
+        #'1051': getConfig_SMP1051,
+        '1051': getConfig_vereinfacht,
         '1093': getConfig_1093,
         '1114': getConfig_1114,
         '1131': getConfig_1131,
