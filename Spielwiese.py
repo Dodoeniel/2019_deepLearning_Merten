@@ -23,10 +23,11 @@ config = configuration.getConfig(projectName, callDataset)
 #logSetup.configureLogfile(config.logPath, config.logName)
 ##logSetup.writeLogfileHeader(config)
 
-Model_name = 'Diff10Sec_trainedmodel.h5'
-model = load_model(Model_name)
+#model_name = 'Diff10Sec_trainedmodel.h5'
+#model = load_model(Model_name)
 
-dataSetName = 'SmallWindowData.p'
+dataSetName = '/media/computations/DATA/ExperimentalData/DataFiles/center10s_pad.p'
+#dataSetName = 'SmallWindowData.p'
 Data = pickle.load(open(dataSetName, 'rb'))
 X_ts = Data[0]
 labels_td = Data[1]
@@ -34,3 +35,16 @@ labels_td = Data[1]
 dropChannels = ['time', 'stopId', 'trg1', 'n1', 'trot1', 'tlin1', 'tlin2', 'tamb1']
 
 COLUMN_ID = 'sliceId'
+
+y = pp.shape_Labels_to_LSTM_format(labels_td)
+labels_write = np.zeros((y.shape[1], 1))
+for i in range(y.shape[0]):
+    labels_write += y[i]
+
+SavePath = 'Matlab/'
+SaveName = 'Labels_Haeufigkeit'
+ofile = open(SavePath+SaveName+'.csv', 'w')
+writer = csv.writer(ofile, delimiter=",")
+for i in range(labels_write.shape[0]):
+    writer.writerow(labels_write[i])
+ofile.close()

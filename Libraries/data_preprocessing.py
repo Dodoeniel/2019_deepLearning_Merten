@@ -457,8 +457,10 @@ def balanceSlicedData(X_ts, labels_sliced, target, distributed_Output = True, CO
     # iterate over all unique IDs
     for id in labels_sliced[COLUMN_ID].unique():
         # for each id the maximum of the labels is searched, resulting in either 0 or 1
-        maximum = max(labels_sliced.loc[labels_sliced[COLUMN_ID] == id, 'label'])
-        labels_single = labels_single.append(pd.Series([maximum], index=[id]))
+        # TODO somehow double indexes appear with floats. Most likely from zero-padding... IDK why
+        if (type(id)) == str:
+            maximum = max(labels_sliced.loc[labels_sliced[COLUMN_ID] == id, 'label'])
+            labels_single = labels_single.append(pd.Series([maximum], index=[id]))
     nrOnes = sum(labels_single.values)  # calc number of data sets that squeal
     nrZeros = len(labels_single.values) - nrOnes  # calc number of data sets that do not squeal
     drop_nr = nrZeros - (math.floor(nrOnes * 100 / target) - nrOnes)  # calc number of data sets to drop
@@ -467,7 +469,7 @@ def balanceSlicedData(X_ts, labels_sliced, target, distributed_Output = True, CO
         # select random data set by index = stopId
         indexToDrop = random.choice(labels_single.index.tolist())
         # check whether that da set squeals
-        if labels_single.get(indexToDrop) == 0:
+        if int(labels_single.get(indexToDrop)) == 0:
             # drop data set from labels
             labels_single = labels_single.drop(labels=indexToDrop)
             labels_sliced = labels_sliced[labels_sliced[COLUMN_ID] != indexToDrop]
@@ -488,8 +490,10 @@ def splitDataPandasFormat(X_ts, labels, split, COLUMN_ID = 'stopId'):
     y_test = pd.DataFrame()
     for id in labels[COLUMN_ID].unique():
         # for each id the maximum of the labels is searched, resulting in either 0 or 1
-        maximum = max(labels.loc[labels[COLUMN_ID] == id, 'label'])
-        labels_single = labels_single.append(pd.Series([maximum], index=[id]))
+        # TODO somehow double indexes appear with floats. Most likely from zero-padding... IDK why
+        if (type(id)) == str:
+            maximum = max(labels.loc[labels[COLUMN_ID] == id, 'label'])
+            labels_single = labels_single.append(pd.Series([maximum], index=[id]))
     nrOnes = sum(labels_single.values)  # calc number of data sets that squeal
 
     for i in range(math.floor(split*nrOnes)):
@@ -543,10 +547,23 @@ def getTimeDistributedLabels(eec_data, X_ts):
             while True:
                 nrSqueals += 1 # index of squeals in eec data begins with 1
                 # check whether squealing occurs
+                #check whether column does exist:
+                try:
+                    tmp = eec_data.get_value(index_eec, 'd_' + str(nrSqueals))
+                    del tmp
+                except KeyError:
+                    break
                 if not np.isnan(eec_data.get_value(index_eec, 'd_'+str(nrSqueals))):
                     # get squealing start and stop time
-                    start = eec_data.get_value(index_eec, 'time_' + str(nrSqueals) + '_start')
-                    stop = eec_data.get_value(index_eec, 'time_' + str(nrSqueals) + '_end')
+                    try:
+                        start = eec_data.get_value(index_eec, 'time_' + str(nrSqueals) + '_start')
+                        stop = eec_data.get_value(index_eec, 'time_' + str(nrSqueals) + '_end')
+                    except KeyError:
+                        #print('KeyError intercepted.\n Most likely the columns for start and stop of squeals are '
+                        #      'composed in an unexpected way. \n Now trying: '+'time_'  + 'start_'+ str(nrSqueals))
+
+                        start = eec_data.get_value(index_eec, 'time_' + 'start_' + str(nrSqueals))
+                        stop = eec_data.get_value(index_eec, 'time_' + 'end_' + str(nrSqueals))
                 else:
                     # break if no squealing occurs
                     break
@@ -705,25 +722,24 @@ def truncate_single(X_single, label_single, duration, location, discard):
         X_truncated = X_single.iloc[startIndex:startIndex+nrOfSteps, :]
         labels_truncated = label_single.iloc[startIndex:startIndex + nrOfSteps, :]
     elif location == FIRST:
-        X_truncated = X_single.loc[X_single['time'] <= duration] # TODO do with steps
-        labels_truncated = label_single.loc[label_single['time'] <= duration]
+        X_truncated = X_single.iloc[X_single.first_valid_index():X_single.first_valid_index()+nrOfSteps, :]
+        labels_truncated = label_single.iloc[label_single.first_valid_index():label_single.first_valid_index()+nrOfSteps, :]
     elif location == LAST:
-        X_truncated = X_single.loc[X_single['time'] >= X_single.get_value(X_single.last_valid_index(), 'time') - duration]
-        labels_truncated = label_single.loc[label_single['time'] >= label_single.get_value(label_single.last_valid_index(), 'time') - duration]
+        X_truncated = X_single.iloc[X_single.last_valid_index()-nrOfSteps:X_single.last_valid_index(), :]
+        labels_truncated = label_single.iloc[label_single.last_valid_index()-nrOfSteps:label_single.last_valid_index(), :]
 
     # check whether time series is long enough for duration
     if X_truncated.shape[0] == nrOfSteps:
         return X_truncated, labels_truncated
     # if it is to short and discard flag is set to zero --> zero padding
     elif not discard:
-        while True:
-            zero_padding = pd.DataFrame(np.zeros((1, X_truncated.shape[1])), columns=X_truncated.columns.values.tolist())
-            zero_padding = zero_padding.set_value(0, 'stopId', X_single.get_value(0, 'stopId'))
-            X_truncated = X_truncated.append(zero_padding, ignore_index=True)
-            zero_padding = pd.DataFrame(np.zeros((1, labels_truncated.shape[1])), columns=labels_truncated.columns.values.tolist())
-            labels_truncated = labels_truncated.append(zero_padding, ignore_index=True)
-            if X_truncated.shape[0] == nrOfSteps:
-                break
+        Length = nrOfSteps - X_truncated.shape[0]
+        zero_padding = pd.DataFrame(np.zeros((Length, X_truncated.shape[1])), columns=X_truncated.columns.values.tolist())
+        zero_padding['stopId'] =  str(X_single.loc[0, 'stopId'])
+        X_truncated = X_truncated.append(zero_padding, ignore_index=True)
+        zero_padding = pd.DataFrame(np.zeros((Length, labels_truncated.shape[1])), columns=labels_truncated.columns.values.tolist())
+        zero_padding['stopId'] =  str(X_single.loc[0, 'stopId'])
+        labels_truncated = labels_truncated.append(zero_padding, ignore_index=True)
         return X_truncated, labels_truncated
     # else return nan
     else:
@@ -865,6 +881,11 @@ def shape_Labels_to_LSTM_format(labels):
         # otherwise 1D
         return v
 
+def reduceNumpyTD(labels_td_np):
+    labels_single = np.zeros((labels_td_np.shape[0], 1))
+    for i in range(labels_td_np.shape[0]):
+        labels_single[i] = max(labels_td_np[i])
+    return labels_single
 
 def getClassWeight_Dict(labels):
     nrOnes = sum(labels)  # calc number of data sets that squeal
@@ -949,7 +970,7 @@ def downSample(X_ts, labels_td, SamplingFactor, COLUMN_ID='stopId'):
 
         X_curr_down = pd.DataFrame()
         label_curr_down = pd.DataFrame()
-        for index in range(0, math.floor(initialLength/SamplingFactor, SamplingFactor)):
+        for index in range(0, math.floor(initialLength/SamplingFactor), SamplingFactor):
             X_curr_down = X_curr_down.append(X_curr.iloc[index, :], ignore_index=True)
             label_curr_down = label_curr_down.append(label_curr.iloc[index, :], ignore_index=True)
 
@@ -974,10 +995,10 @@ def upSample(X_ts, labels_td, SamplingFactor, COLUMN_ID='stopId'):
         X_curr_int = pd.DataFrame()
         label_curr_int = pd.DataFrame()
         for index in range(initialLength):
-            X_curr_int = X_curr_int.append(X_curr.iloc[index, :], ignore_index=True)
-            X_curr_int = X_curr_int.append(nanXFrame, ignore_index=True)
-            label_curr_int = label_curr_int.append(label_curr.iloc[index, :], ignore_index=True)
-            label_curr_int = label_curr_int.append(nanyFrame, ignore_index=True)
+            X_curr_int = X_curr_int.append(X_curr.iloc[index, :], ignore_index=True, sort=True)
+            X_curr_int = X_curr_int.append(nanXFrame, ignore_index=True, sort=True)
+            label_curr_int = label_curr_int.append(label_curr.iloc[index, :], ignore_index=True, sort=True)
+            label_curr_int = label_curr_int.append(nanyFrame, ignore_index=True, sort=True)
 
 
 
@@ -985,6 +1006,8 @@ def upSample(X_ts, labels_td, SamplingFactor, COLUMN_ID='stopId'):
         X_curr_int['tempg'] = X_curr_int['tempg'].interpolate(method='linear')
         X_curr_int['frc1'] = X_curr_int['frc1'].interpolate(method='linear')
         X_curr_int['n1'] = X_curr_int['n1'].interpolate(method='linear')
+        X_curr_int['v1'] = X_curr_int['n1'].interpolate(method='linear')
+
 
         label_curr_int['label'] = label_curr_int['label'].interpolate(method='nearest')
         label_curr_int['time'] = label_curr_int['time'].interpolate(method='linear')

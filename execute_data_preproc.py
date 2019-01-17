@@ -8,8 +8,8 @@ from Libraries import log_setup as logSetup
 
 
 
-projectName = 'smallSingleWindow'
-callDataset = '1051'
+projectName = 'center8s_pad_C'
+callDataset = 'sysC'
 config = configuration.getConfig(projectName, callDataset)
 
 # Setup Logger
@@ -40,8 +40,9 @@ labels = dataPreproc.getTimeDistributedLabels(eec, X_ts)
 
 # data preproc with one window
 part = 'center'
-duration = 2
-Data = dataPreproc.truncate_all(X_ts, labels, duration, part, discard=True)
+duration = 8
+
+Data = dataPreproc.truncate_all(X_ts, labels, duration, part, discard=False)
 
 
 

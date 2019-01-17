@@ -11,11 +11,11 @@ from keras import callbacks
 from keras.regularizers import L1L2
 
 # list of names for Runs
-RunNames = ['l2s']
+RunNames = ['tests']
 # list of data set names
-fileNames = ['smallSingleWindow.p']
+fileNames = ['center6s_pad.p']
 # list of models to run
-models = ['Model2L_16']
+models = ['Model2L_16td']
 path = ''
 Savepath = ''
 

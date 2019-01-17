@@ -37,35 +37,50 @@ def getConfig_vereinfacht(projectName):
                                 projectName=projectName)
     return  config_vereinfacht
 
-def getConfig_1093(projectName):
-    config_1093 = Configuration(eedPath= '../../_Data/1093/eed/',
-                                eecPath= '../../_Data/1093/1093_offlinedetection_detection1_validation3_fl_eec.csv',
+def getConfig_systemA(projectName):
+    config_systemA = Configuration(eedPath= '/media/computations/DATA/ExperimentalData/systemA/eed/',
+                                eecPath= '/media/computations/DATA/ExperimentalData/systemA/1085_fl_eec.csv',
+                                savePath='/home/computations/ExperimentalData/',
+                                datasetNumber= '1085',
+                                projectName=projectName)
+    return config_systemA
+
+def getConfig_systemB(projectName):
+    config_systemB = Configuration(eedPath= '/media/computations/DATA/ExperimentalData/systemB/eed/',
+                                eecPath= '/media/computations/DATA/ExperimentalData/systemB/1093_fl_eec.csv',
+                                savePath='/home/computations/ExperimentalData/',
                                 datasetNumber= '1093',
                                 projectName=projectName)
-    return config_1093
+    return config_systemB
 
-def getConfig_1114(projectName):
-    config_1114 = Configuration(eedPath= '../../_Data/1114/eed/',
-                                eecPath= '../../_Data/1114/1114_offlinedetection_detection1_validation3_fr_eec.csv',
-                                datasetNumber='1114',
-                                projectName=projectName)
-    return config_1114
 
-def getConfig_1131(projectName):
-    config_1131 = Configuration(eedPath= '../../_Data/1131/eed/',
-                                eecPath= '../../_Data/1131/1131_offlinedetection_detection1_validation3_fl_eec.csv',
-                                datasetNumber='1131',
+def getConfig_systemC(projectName):
+    config_systemC = Configuration(eedPath= '/media/computations/DATA/ExperimentalData/systemC/eed/',
+                                eecPath= '/media/computations/DATA/ExperimentalData/systemC/1114_fr_eec.csv',
+                                savePath='/home/computations/ExperimentalData/',
+                                datasetNumber= '1141',
                                 projectName=projectName)
-    return config_1131
+    return config_systemC
+
+
+def getConfig_systemD(projectName):
+    config_systemD = Configuration(eedPath= '/media/computations/DATA/ExperimentalData/systemC/eed/',
+                                eecPath= '/media/computations/DATA/ExperimentalData/systemC/1131_fl_eec.csv',
+                                savePath='/home/computations/ExperimentalData/',
+                                datasetNumber= '1131',
+                                projectName=projectName)
+    return config_systemD
+
 
 def getConfig(projectName, callDataset):
     """for parallel execution on cluster only"""
     myDict ={
-        #'1051': getConfig_SMP1051,
-        '1051': getConfig_vereinfacht,
-        '1093': getConfig_1093,
-        '1114': getConfig_1114,
-        '1131': getConfig_1131,
+        '1051': getConfig_SMP1051,
+        #'1051': getConfig_vereinfacht,
+        'sysA': getConfig_systemA,
+        'sysB': getConfig_systemB,
+        'sysC': getConfig_systemC,
+        'sysD': getConfig_systemD
             }
 
     config = myDict[callDataset](projectName)
