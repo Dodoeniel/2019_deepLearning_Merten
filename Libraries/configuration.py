@@ -58,14 +58,14 @@ def getConfig_systemC(projectName):
     config_systemC = Configuration(eedPath= '/media/computations/DATA/ExperimentalData/systemC/eed/',
                                 eecPath= '/media/computations/DATA/ExperimentalData/systemC/1114_fr_eec.csv',
                                 savePath='/home/computations/ExperimentalData/',
-                                datasetNumber= '1141',
+                                datasetNumber= '1114',
                                 projectName=projectName)
     return config_systemC
 
 
 def getConfig_systemD(projectName):
-    config_systemD = Configuration(eedPath= '/media/computations/DATA/ExperimentalData/systemC/eed/',
-                                eecPath= '/media/computations/DATA/ExperimentalData/systemC/1131_fl_eec.csv',
+    config_systemD = Configuration(eedPath= '/media/computations/DATA/ExperimentalData/systemD/eed/',
+                                eecPath= '/media/computations/DATA/ExperimentalData/systemD/1131_fl_eec.csv',
                                 savePath='/home/computations/ExperimentalData/',
                                 datasetNumber= '1131',
                                 projectName=projectName)
@@ -77,10 +77,10 @@ def getConfig(projectName, callDataset):
     myDict ={
         '1051': getConfig_SMP1051,
         #'1051': getConfig_vereinfacht,
-        'sysA': getConfig_systemA,
-        'sysB': getConfig_systemB,
-        'sysC': getConfig_systemC,
-        'sysD': getConfig_systemD
+        '1085': getConfig_systemA,
+        '1093': getConfig_systemB,
+        '1114': getConfig_systemC,
+        '1131': getConfig_systemD
             }
 
     config = myDict[callDataset](projectName)

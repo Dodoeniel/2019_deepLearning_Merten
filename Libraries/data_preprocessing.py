@@ -800,7 +800,7 @@ def truncate_differentiated(X_ts, labels, part, target_list, unique=True):
     return same_length_list
 
 
-def reduceLabel(labels_distributed):
+def reduceLabel(labels_distributed, indexStopID=False):
     """
     @author: Daniel
     reduces time distributed labels back to a single label for a time series, based on either its stop id or its
@@ -813,12 +813,20 @@ def reduceLabel(labels_distributed):
         COLUMN_ID = 'sliceId'
     index = 0
     labels_single = list()
+    labels_single_withIndex = pd.Series()
     # iterate over all unique IDs
     for id in labels_distributed[COLUMN_ID].unique():
         # for each id the maximum of the label function is searched, resulting in either 0 or 1
         maximum = max(labels_distributed.loc[labels_distributed[COLUMN_ID] == id, 'label'])
-        labels_single.append(maximum)
-    return pd.DataFrame(labels_single)
+        if not indexStopID:
+            labels_single.append(maximum)
+        else:
+            labels_single_withIndex = labels_single_withIndex.append(pd.Series([maximum], index=[id]))
+
+    if indexStopID:
+        return labels_single_withIndex
+    else:
+        return pd.DataFrame(labels_single)
 
 
 def shape_Data_to_LSTM_format(X_ts, dropChannels=['stopId', 'time'], scale = True):
@@ -937,9 +945,7 @@ def getUpDownLabel_pandas(X_ts, labels_td, upTime = 0.1, downTime=0.1, doUp=True
     return X_without, X_with, labels_without, labels_upDown_pandas
 
 
-def getUpDownLabels_np(labels_upDown_pandas, COLUMN_ID='stopId'):
-
-
+def getUpDownLabels_np(labels_upDown_pandas, COLUMN_ID='stopId'):#
     #### one hot encoding: no-squeal y/n, squeal y/n, up y/n, down y/n
     label_np = np.zeros((len(labels_upDown_pandas[COLUMN_ID].unique()),
                          len(labels_upDown_pandas[labels_upDown_pandas[COLUMN_ID] ==
@@ -959,6 +965,21 @@ def getUpDownLabels_np(labels_upDown_pandas, COLUMN_ID='stopId'):
             label_np[i][index][3] = 1
     return label_np
 
+def getUpDownLabels_np_v2(labels_upDown_pandas, COLUMN_ID='stopId'):#
+    #### one hot encoding: no-squeal y/n, squeal y/n, up y/n, down y/n
+    label_np = np.zeros((len(labels_upDown_pandas[COLUMN_ID].unique()),
+                         len(labels_upDown_pandas[labels_upDown_pandas[COLUMN_ID] ==
+                                                  labels_upDown_pandas[COLUMN_ID].unique()[0]]), 3))
+    for i in range(label_np.shape[0]):
+        id = labels_upDown_pandas[COLUMN_ID].unique()[i]
+        currLabel = labels_upDown_pandas[labels_upDown_pandas[COLUMN_ID] == id]['label'].values
+        upYN_index = np.where(currLabel == 2)[0]
+        downYN_index = np.where(currLabel == 3)[0]
+        for index in upYN_index:
+            label_np[i][index][1] = 1
+        for index in downYN_index:
+            label_np[i][index][2] = 1
+    return label_np
 
 def downSample(X_ts, labels_td, SamplingFactor, COLUMN_ID='stopId'):
     X_downSampled = pd.DataFrame()

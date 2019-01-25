@@ -9,8 +9,8 @@ import numpy as np
 import csv
 import pandas as pd
 
-path = '/media/computations/DATA/ExperimentalData/DataFiles/first10s_pad/'
-fileName = 'first10s_pad'
+path = '/media/computations/DATA/ExperimentalData/DataFiles/center8s_pad/'
+fileName = 'center8s_pad_TestDataPandas'
 #path = ''
 #fileName = 'SmallWindowData'
 Data = pickle.load(open(path+fileName+'.p', 'rb'))
@@ -25,10 +25,10 @@ labels_td = Data[1]
 
 
 COLUMN_ID = 'stopId'
-ModelPath = '/media/computations/DATA/ExperimentalData/Runs/137808/'
-ModelName = 'f10s_padmodel'
+ModelPath = '/media/computations/DATA/ExperimentalData/Runs/138798/'
+ModelName = 'c6L_256model'
 
-wantedSet = 'all'
+wantedSet = 'FP'
 
 if not wantedSet == 'all':
     m = load_model(ModelPath + ModelName + '.h5')
@@ -46,8 +46,8 @@ elif wantedSet == 'TP':
 
 
 
-SavePath = 'Matlab/'
-SaveName = fileName+'_' + wantedSet + '_StopIdInfo'
+SavePath = 'Matlab/SingleWindow_AllSameId/'
+SaveName = fileName+'_' + wantedSet + ModelName + '_StopIdInfo'
 ofile = open(SavePath+SaveName+'.csv', 'w')
 writer = csv.writer(ofile, delimiter=",")
 

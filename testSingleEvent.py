@@ -22,10 +22,10 @@ from keras import backend as K
 #projectName = 'Diff10Sec_trained2model'
 #name = 'Diff10Sec_trained2model.h5'
 #callDataset = '1051'
-stopId = '1852.1051'
+stopId = '332.1051'
 
-modelPath = '/media/computations/DATA/ExperimentalData/Runs/137805/'
-modelName = 'c10s_td_padmodel.h5'
+modelPath = '/media/computations/DATA/ExperimentalData/Runs/135538/'
+modelName = 'l10s_tdmodel.h5'
 model = load_model(modelPath+modelName)
 
 #config = configuration.getConfig(projectName, callDataset)
@@ -36,10 +36,10 @@ model = load_model(modelPath+modelName)
 #eec = prepare_csv.eec_csv_to_eecData(config.eecPath, callDataset)
 #labels = pp.getTimeDistributedLabels(eec, X_ts)
 
-loadPath = '/media/computations/DATA/ExperimentalData/DataFiles/first10s_pad/'
-dataSetName = 'first10s_pad'
+loadPath = '/media/computations/DATA/ExperimentalData/Runs/135538/'
+dataSetName = 'l10s_td_TestData'
 
-Data = pickle.load(open(loadPath + dataSetName+'_TestDataPandas.p', 'rb'))
+Data = pickle.load(open(loadPath + dataSetName+'.p', 'rb'))
 X_ts = Data[0]
 labels = Data[1]
 
@@ -52,12 +52,19 @@ dropChannels = ['time', 'stopId']
 
 X = pp.shape_Data_to_LSTM_format(X_single, dropChannels)
 y = pp.shape_Labels_to_LSTM_format(labels_single)
+
+labels_td_pred = model.predict_classes(X)
+FP, FN, TP, TN = d_eval.count_predictions(y, labels_td_pred)
+
+print('\n      1_pr 0_pr')
+print('\n 1_tr | ' + str(TP) + '  ' + str(FN))
+print('\n 0_tr | ' + str(FP) + '  ' + str(TN))
+
 d_eval.countTD_MaxLabel([(X, y)], model)
 
-SavePath = 'Matlab/'
+SavePath = 'Matlab/PredictedLabels1/'
 SaveName = modelName+stopId+'_td_label'
 ofile = open(SavePath+SaveName+'.csv', 'w')
-labels_td_pred = model.predict_classes(X)
 
 writer = csv.writer(ofile, delimiter=",")
 writer.writerow([stopId])

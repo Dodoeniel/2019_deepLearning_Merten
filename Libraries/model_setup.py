@@ -9,6 +9,7 @@ from keras.layers import Flatten
 from keras.layers import Dense
 from keras.layers import Lambda
 from keras.layers import Dropout
+from keras.optimizers import SGD
 from keras import backend as K
 
 
@@ -1502,9 +1503,30 @@ def m2l_16_UpDown(input_shape, rreg=None, breg=None, kreg=None):
     m.add(Dropout(0.2))
     m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2, recurrent_regularizer=rreg, bias_regularizer=breg, kernel_regularizer=kreg))
     m.add(Dropout(0.2))
-    m.add(TimeDistributed(Dense(4, activation='sigmoid')))
+    m.add(TimeDistributed(Dense(3, activation='sigmoid')))
     m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     return m
+
+
+
+def m5l_64_Rate1(input_shape):
+    m = Sequential()
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    sgd = SGD(lr=0.0, momentum=0.9, decay=0.0, nesterov=False)
+    m.compile(optimizer=sgd, loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
 
 modelDict = {
     'singleLabel_1': singleLabel_1,
@@ -1616,6 +1638,9 @@ modelDict = {
     'm2l_rRegu_nTD' : m2l_rRegu_nTD,
     'm2L_rRegu16' : m2L_rRegu16,
     #### UpDownLabel Models
-    'm2l_16_UpDown' : m2l_16_UpDown
+    'm2l_16_UpDown' : m2l_16_UpDown,
+
+    ### Model for Learning rates
+    'm5l_64_Rate1' : m5l_64_Rate1
 
 }

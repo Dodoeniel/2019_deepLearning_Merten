@@ -1,9 +1,9 @@
 import pickle
 from Libraries import data_preprocessing as pp
 
-loadPath = '/media/computations/DATA/ExperimentalData/DataFiles/last8s_pad/'
-dataSetName = 'last8s_pad'
-SavePath = '/media/computations/DATA/ExperimentalData/DataFiles/last8s_pad/'
+loadPath = '/media/computations/DATA/ExperimentalData/DataFiles/systemABCD/'
+dataSetName = 'center8s_pad_D'
+SavePath = '/media/computations/DATA/ExperimentalData/DataFiles/systemABCD/'
 
 Data = pickle.load(open(loadPath + dataSetName+'.p', 'rb'))
 X_ts = Data[0]
