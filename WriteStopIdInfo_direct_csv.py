@@ -1,56 +1,32 @@
-import pickle
-from keras.models import load_model
+from Libraries import data_import as dataImport
+from Libraries import data_preprocessing as dataPreproc
+
 from Libraries import configuration
 from Libraries import log_setup as logSetup
 from Libraries import prepare_csv as csv_read
-from Libraries import data_evaluation as d_eval
 from Libraries import data_preprocessing as pp
 import numpy as np
 import csv
 import pandas as pd
 
-#path = '/media/computations/DATA/ExperimentalData/DataFiles/center8s_pad/'
-#fileName = 'center8s_pad'
-path = '/media/computations/DATA/ExperimentalData/DataFiles/systemABCD/'
-fileName = 'center8s_pad_D'
-#path = ''
-#fileName = 'SmallWindowData'
-Data = pickle.load(open(path+fileName+'.p', 'rb'))
+projectName = 'tmp'
+callDataset = '1051'
 
-## if difftruncated Data:
-#X_ts = Data[0][0]
-#labels_td = Data[0][1]
-## if window data
-X_ts = Data[0]
-labels_td = Data[1]
+config = configuration.getConfig(projectName, callDataset)
 
+# Setup Logger
+logSetup.configureLogfile(config.logPath, config.logName)
+logSetup.writeLogfileHeader(config)
 
+# Import verified Time Series Data with Nadines Libraries
+X_ts, labels = dataImport.loadVerifiedBrakeData(config.eedPath, config.eecPath, config.datasetNumber)
 
 COLUMN_ID = 'stopId'
-ModelPath = '/media/computations/DATA/ExperimentalData/Runs/138798/'
-ModelName = 'c6L_64model'
-
-wantedSet = 'all'
-
-if not wantedSet == 'all':
-    m = load_model(ModelPath + ModelName + '.h5')
-    dropChannels = ['time', 'stopId']
-    (FP_X, FP_y), (FN_X, FN_y), (TP_X, TP_y), (TN_X, TN_y) = d_eval.get_classified_dataSets(X_ts, labels_td, m, dropChannels=dropChannels, COLUMN_ID=COLUMN_ID)
-
-if wantedSet == 'FP':
-    labels_td = FP_y
-elif wantedSet == 'FN':
-    labels_td = FN_y
-elif wantedSet == 'TN':
-    labels_td = TN_y
-elif wantedSet == 'TP':
-    labels_td = TP_y
-
 
 
 SavePath = 'Matlab/Feature_Histogram/'
-#SaveName = fileName+'_' + wantedSet+'_' + ModelName + '_StopIdInfo'
-SaveName = fileName + '_features'
+SaveName = callDataset + '_features'
+
 ofile = open(SavePath+SaveName+'.csv', 'w')
 writer = csv.writer(ofile, delimiter=",")
 
@@ -63,8 +39,6 @@ Param = ['v1', 'p1', 'torq1', 'frc1', 'tempg', 'tfld1', 'rh1']
 
 Infos = Infos + Param
 writer.writerow(Infos)
-
-single_label = pp.reduceLabel(labels_td)
 
 def shrinkStopId(stopId):
     DataSet = '1051'
@@ -84,14 +58,14 @@ def mean(ParamId, X_ts, stopId, COLUMN_ID):
         return 0
 
 
-for i in range(len(single_label)):
-    stopId = labels_td[COLUMN_ID].unique()[i]
+for i in range(len(labels)):
+    stopId = X_ts[COLUMN_ID].unique()[i]
     if COLUMN_ID == 'stopId':
-        currInfos = [shrinkStopId(stopId), single_label.iloc[i, 0]]
+        currInfos = [shrinkStopId(stopId), labels.loc[stopId]]
     elif COLUMN_ID == 'sliceId':
         ### only valid for up to 10 slices
         sliceNr = stopId[-1]
-        currInfos = [shrinkStopId(stopId), sliceNr, single_label.iloc[i, 0]]
+        currInfos = [shrinkStopId(stopId), sliceNr, labels.loc[stopId]]
     for curr_param in Param:
         currInfos = currInfos + [mean(curr_param, X_ts, stopId, COLUMN_ID)]
     writer.writerow(currInfos)

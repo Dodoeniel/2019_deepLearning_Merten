@@ -8,8 +8,8 @@ from Libraries import log_setup as logSetup
 
 
 
-projectName = 'center8s_pad_C'
-callDataset = '1114'
+projectName = 'w1s_h05s'
+callDataset = '1051'
 config = configuration.getConfig(projectName, callDataset)
 
 # Setup Logger
@@ -31,18 +31,18 @@ labels = dataPreproc.getTimeDistributedLabels(eec, X_ts)
 #Data = dataPreproc.truncate_differentiated(X_ts, labels, part, target_list)
 
 # data preproc with sliding window
-#w_size = 10 # [s]
-#hop = 1# [s]
+w_size = 1 # [s]
+hop = 0.5# [s]
 ### input DataSet as FlatDataFrame and time distributedLabels
 # discard = True --> data with windows being smaller than window are discarded
 # discard = False --> zero padding
-#Data = dataPreproc.windowData_all(X_ts, labels, w_size, hop, discard=True)
+Data = dataPreproc.windowData_all(X_ts, labels, w_size, hop, discard=True)
 
 # data preproc with one window
-part = 'center'
-duration = 8
+#part = 'center'
+#duration = 8
 
-Data = dataPreproc.truncate_all(X_ts, labels, duration, part, discard=False)
+#Data = dataPreproc.truncate_all(X_ts, labels, duration, part, discard=False)
 
 
 

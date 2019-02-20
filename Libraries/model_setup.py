@@ -9,6 +9,7 @@ from keras.layers import Flatten
 from keras.layers import Dense
 from keras.layers import Lambda
 from keras.layers import Dropout
+from keras.layers import Bidirectional
 from keras.optimizers import SGD
 from keras import backend as K
 
@@ -1527,6 +1528,1154 @@ def m5l_64_Rate1(input_shape):
     m.compile(optimizer=sgd, loss='binary_crossentropy', metrics=['accuracy'])
     return m
 
+def adam(input_shape):
+    m = Sequential()
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def rmsprop(input_shape):
+    m = Sequential()
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='rmsprop', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+def sgd2(input_shape):
+    m = Sequential()
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+
+def Model1L_8sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model1L_16sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model1L_32sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model1L_64sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model1L_128sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model1L_256sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model2L_8sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model2L_16sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model2L_32sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model2L_64sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model2L_128sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model2L_256sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model3L_8sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model3L_16sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model3L_32sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model3L_64sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model3L_128sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model3L_256sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+
+def Model4L_8sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model4L_16sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model4L_32sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model4L_64sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model4L_128sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model4L_256sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model5L_8sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model5L_16sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model5L_32sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model5L_64sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model5L_128sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model5L_256sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+
+def Model6L_8sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model6L_16sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model6L_32sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model6L_64sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model6L_128sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model6L_256sgd(input_shape):
+    m = Sequential()
+    m.add(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='sgd', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+## bidirectional
+
+def Model1L_8bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model1L_16bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model1L_32bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model1L_64bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model1L_128bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model1L_256bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model2L_8bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model2L_16bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model2L_32bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model2L_64bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model2L_128bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model2L_256bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+def Model3L_8bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model3L_16bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model3L_32bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model3L_64bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model3L_128bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model3L_256bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model4L_8bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model4L_16bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model4L_32bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model4L_64bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model4L_128bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model4L_256bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model5L_8bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model5L_16bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model5L_32bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model5L_64bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model5L_128bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model5L_256bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model6L_8bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(8, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model6L_16bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(16, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model6L_32bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(32, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model6L_64bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(64, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model6L_128bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(128, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
+
+
+def Model6L_256bi(input_shape):
+    m = Sequential()
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Bidirectional(LSTM(256, return_sequences=True, input_shape=input_shape, recurrent_dropout=0.2)))
+    m.add(Dropout(0.2))
+    m.add(Flatten())
+    m.add(Dense(1, activation='sigmoid'))
+    m.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    return m
 
 modelDict = {
     'singleLabel_1': singleLabel_1,
@@ -1641,6 +2790,92 @@ modelDict = {
     'm2l_16_UpDown' : m2l_16_UpDown,
 
     ### Model for Learning rates
-    'm5l_64_Rate1' : m5l_64_Rate1
+    'm5l_64_Rate1' : m5l_64_Rate1,
+    'adam' : adam,
+    'rmsprop' : rmsprop,
+    'sgd' : sgd,
+    'sgd2' : sgd2,
+
+    ### sgd
+    'Model1L_8sgd' : Model1L_8sgd,
+    'Model2L_8sgd': Model2L_8sgd,
+    'Model3L_8sgd': Model3L_8sgd,
+    'Model1L_16sgd': Model1L_16sgd,
+    'Model2L_16sgd': Model2L_16sgd,
+    'Model3L_16sgd': Model3L_16sgd,
+    'Model1L_32sgd': Model1L_32sgd,
+    'Model2L_32sgd': Model2L_32sgd,
+    'Model3L_32sgd': Model3L_32sgd,
+    'Model1L_64sgd': Model1L_64sgd,
+    'Model2L_64sgd': Model2L_64sgd,
+    'Model3L_64sgd': Model3L_64sgd,
+    'Model1L_128sgd': Model1L_128sgd,
+    'Model2L_128sgd': Model2L_128sgd,
+    'Model3L_128sgd': Model3L_128sgd,
+    'Model1L_256sgd': Model1L_256sgd,
+    'Model2L_256sgd': Model2L_256sgd,
+    'Model3L_256sgd': Model3L_256sgd,
+    'Model4L_8sgd': Model4L_8sgd,
+    'Model5L_8sgd': Model5L_8sgd,
+    'Model6L_8sgd': Model6L_8sgd,
+    'Model4L_16sgd': Model4L_16sgd,
+    'Model5L_16sgd': Model5L_16sgd,
+    'Model6L_16sgd': Model6L_16sgd,
+    'Model4L_32sgd': Model4L_32sgd,
+    'Model5L_32sgd': Model5L_32sgd,
+    'Model6L_32sgd': Model6L_32sgd,
+    'Model4L_64sgd': Model4L_64sgd,
+    'Model5L_64sgd': Model5L_64sgd,
+    'Model6L_64sgd': Model6L_64sgd,
+    'Model4L_128sgd': Model4L_128sgd,
+    'Model5L_128sgd': Model5L_128sgd,
+    'Model6L_128sgd': Model6L_128sgd,
+    'Model4L_256sgd': Model4L_256sgd,
+    'Model5L_256sgd': Model5L_256sgd,
+    'Model6L_256sgd': Model6L_256sgd,
+
+
+    ## bi
+    'Model1L_8bi': Model1L_8bi,
+    'Model2L_8bi': Model2L_8bi,
+    'Model3L_8bi': Model3L_8bi,
+    'Model4L_8bi': Model4L_8bi,
+    'Model5L_8bi': Model5L_8bi,
+    'Model6L_8bi': Model6L_8bi,
+
+    'Model1L_16bi': Model1L_16bi,
+    'Model2L_16bi': Model2L_16bi,
+    'Model3L_16bi': Model3L_16bi,
+    'Model4L_16bi': Model4L_16bi,
+    'Model5L_16bi': Model5L_16bi,
+    'Model6L_16bi': Model6L_16bi,
+
+    'Model1L_32bi': Model1L_32bi,
+    'Model2L_32bi': Model2L_32bi,
+    'Model3L_32bi': Model3L_32bi,
+    'Model4L_32bi': Model4L_32bi,
+    'Model5L_32bi': Model5L_32bi,
+    'Model6L_32bi': Model6L_32bi,
+
+    'Model1L_64bi': Model1L_64bi,
+    'Model2L_64bi': Model2L_64bi,
+    'Model3L_64bi': Model3L_64bi,
+    'Model4L_64bi': Model4L_64bi,
+    'Model5L_64bi': Model5L_64bi,
+    'Model6L_64bi': Model6L_64bi,
+
+    'Model1L_128bi': Model1L_128bi,
+    'Model2L_128bi': Model2L_128bi,
+    'Model3L_128bi': Model3L_128bi,
+    'Model4L_128bi': Model4L_128bi,
+    'Model5L_128bi': Model5L_128bi,
+    'Model6L_128bi': Model6L_128bi,
+
+    'Model1L_256bi': Model1L_256bi,
+    'Model2L_256bi': Model2L_256bi,
+    'Model3L_256bi': Model3L_256bi,
+    'Model4L_256bi': Model4L_256bi,
+    'Model5L_256bi': Model5L_256bi,
+    'Model6L_256bi': Model6L_256bi
 
 }

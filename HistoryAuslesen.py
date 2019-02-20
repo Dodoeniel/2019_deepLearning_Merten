@@ -5,8 +5,8 @@ import matplotlib as mpl
 #mpl.use("pgf")
 mpl.use('TkAgg')
 
-Run = 127964
-Name = 'Diff10Sec_kReg'
+Run = 138798
+Name = 'c1L_16'
 PATH = '/media/computations/DATA/ExperimentalData/Runs/' + str(Run) + '/' + Name + '_history.p'
 
 import matplotlib.pyplot as plt
@@ -21,8 +21,8 @@ plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'valid'], loc='upper left')
-plt.show()
+#plt.show()
 
-#from matplotlib2tikz import save as tikz_save
+from matplotlib2tikz import save as tikz_save
 
-#tikz_save(Run+".tex")
+tikz_save(Name+".tex")
